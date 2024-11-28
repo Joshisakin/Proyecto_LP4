@@ -1,0 +1,183 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #002b5c;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+    position: relative;
+    height: auto;
+}
+
+.navbar {
+    display: flex;
+    padding: 0;
+    font-size: 1.3rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: white;
+    padding:  0 0 0 2rem;
+}
+
+.login {
+    font-size: 1.2rem;
+}
+
+.navbar nav a,
+.navbar .login a {
+    margin: 0 25px;
+    color: white;
+    text-decoration: none;
+}
+
+nav {
+    margin-right: 20%;
+}
+nav a {
+    margin: 0 10px; 
+}
+
+/* formulario */
+.fondo {
+    background-image: linear-gradient(
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0.5)),
+        url("https://www.lorenzoexpeditions.com/wp-content/uploads/2023/08/Amazonas-Peru.jpg");
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+    position: relative;
+    height: 600px;
+}
+
+.div {
+    background-color: white;
+    padding: 2em;
+    margin: 7rem 4rem;
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.div h2 {
+    color: #004a99;
+    margin-bottom: 1em;
+    text-align: center;
+    font-size: 30px;
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 3em;
+}
+
+form input {
+    width: 100%;
+    padding: 1.2em;
+    margin-top: 0.8rem;
+    margin-bottom: 2em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    border-radius: 10px;
+    padding: 15px 0;
+    width: 100%;
+    background-color: #004a99;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+}
+
+form button:hover {
+    background-color: #003366;
+}
+
+.resultados, .reserva-item {
+    background-color: #e8f4ff;
+    padding: 1em;
+    border-radius: 5px;
+    margin-top: 1em;
+    text-align: center;
+}
+
+.reserva-item p {
+    margin-bottom: 0.5em;
+}
+
+.cancelar {
+    background-color: #d9534f;
+    color: white;
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancelar:hover {
+    background-color: #c9302c;
+}
+
+/*footeer */
+.footer {
+    background-color: #002b5c;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer .social-icons a {
+    margin: 0 10px;
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+}
+.footer .links {
+    margin-top: 15px;
+}
+.footer .links a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 14px;
+}
+.footer .links a:hover {
+    text-decoration: underline;
+}
+.footer .bottom-section {
+    margin-top: 20px;
+    border-top: 1px solid #ffffff;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer .bottom-section img {
+    height: 40px;
+    margin: 10px;
+}
+.footer .bottom-section .company-name {
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.affiliates {
+    padding-top: 10px;
+}

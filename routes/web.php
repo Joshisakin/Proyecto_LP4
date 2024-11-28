@@ -7,6 +7,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/rutas', function () {
+    return view('rutas');
+})->name('rutas');
+
+Route::get('/contacto', function () {
+    return view('contacto'); // Página de contacto
+})->name('contacto');
+
+Route::get('/registrarse', function () {
+    return view('registrarse');
+})->name('registrarse');
+
+Route::get('/iniciarsesion', function () {
+    return view('iniciarsesion');
+})->name('iniciarsesion');
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
