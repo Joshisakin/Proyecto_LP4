@@ -1,0 +1,358 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #002b5c;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+    position: relative;
+    height: auto;
+}
+
+.navbar {
+    display: flex;
+    padding: 0;
+    font-size: 1.3rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: white;
+    padding:  0 0 0 2rem;
+}
+
+.login {
+    font-size: 1.2rem;
+}
+
+.navbar nav a,
+.navbar .login a {
+    margin: 0 25px;
+    color: white;
+    text-decoration: none;
+}
+
+nav {
+    margin-right: 20%;
+}
+nav a {
+    margin: 0 10px; 
+}
+
+/* seleccion */
+.ruta-container {
+    background-color: #002b5c;
+    padding: 50px 40px;
+    border-radius: 10px;
+    background-color: #002c5c;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: white;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.ruta-container h2 {
+    margin-bottom: 25px;
+    font-size: 28px;
+}
+
+.ruta-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) auto;
+    gap: 20px;
+    align-items: end;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    position: relative;
+}
+
+.campo label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.campo label i {
+    margin-right: 8px;
+}
+
+.campo input {
+    padding: 12px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+    color: #333;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.campo input::placeholder {
+    color: #aaa;
+}
+
+.btn-buscar {
+    background-color: #FFD700;
+    color: black;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.btn-buscar i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.btn-buscar:hover {
+    background-color: #FFC300;
+}
+
+/* Estilos de la línea de tiempo */
+.timeline {
+    position: relative;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+/* Línea central permanece en la posición original */
+.timeline::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 20.5%;
+    width: 4px;
+    background-color: #FFD700;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+
+/* Estilos de los elementos en la línea de tiempo */
+.timeline-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    margin-left: 50px ;
+}
+
+/* Círculo de números */
+.circle {
+    width: 30px;
+    height: 30px;
+    background-color: #FFD700;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 10px;
+    z-index: 2;
+    position: relative;
+}
+
+/* Estilo del contenido de la línea de tiempo */
+.timeline-content {
+    display: flex;
+    align-items: center; 
+    justify-content: flex-start; 
+    background-color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+    max-width: 200px;
+    margin: 0 0 0 20px; 
+    text-align: left; 
+}
+
+/* Iconos y texto en la misma fila */
+.timeline-content p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.timeline-content i {
+    margin-right: 8px;
+    color: #FFD700;
+    font-size: 1.3rem;
+}
+
+
+
+/* Rutas */
+
+.rutas h2 {
+    margin-top: 50px;
+    padding: 40px 0;
+    font-size: 30px;
+    color: #fff;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #002b5c;
+}
+
+.estructura {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 60px;
+    background: #002b5c;
+    ;
+}
+
+.card {
+    position: relative;
+    width: 320px;
+    height: 350px;
+    border: none;
+    margin: 20px;
+}
+
+.card .face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: .5s;
+}
+
+.card .front {
+    transform: perspective(600px) rotateY(0deg);
+    box-shadow: 0 5px 10px #000;
+}
+
+.card .front img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card .front h3 {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 45px;
+    line-height: 45px;
+    color: #fff;
+    background: rgba(0, 0, 0, .4);
+    text-align: center;
+}
+
+.card .back {
+    transform: perspective(600px) rotateY(180deg);
+    background-color: #ffffff;
+    border-radius: 10px;
+    max-width: 600px; 
+    border: 1px solid #e0e0e0;
+    position: relative;
+    box-shadow: 0 5px 10px #000;
+}
+
+.carta-header {
+    background-color: #FFD700;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px 6px 0 0;
+    color: black;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.card.front p {
+    letter-spacing: 1px;
+}
+
+.card:hover .front {
+    transform: perspective(600px) rotateY(180deg);
+}
+
+.card:hover .back {
+    transform: perspective(600px) rotateY(360deg);
+}
+
+/*footeer */
+.footer {
+    background-color: #002b5c;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer .social-icons a {
+    margin: 0 10px;
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+}
+.footer .links {
+    margin-top: 15px;
+}
+.footer .links a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 14px;
+}
+.footer .links a:hover {
+    text-decoration: underline;
+}
+.footer .bottom-section {
+    margin-top: 20px;
+    border-top: 1px solid #ffffff;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer .bottom-section img {
+    height: 40px;
+    margin: 10px;
+}
+.footer .bottom-section .company-name {
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.affiliates {
+    padding-top: 10px;
+}

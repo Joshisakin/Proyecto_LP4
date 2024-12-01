@@ -1,0 +1,249 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    background-color: #002b5c;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 20px;
+    position: relative;
+    height: auto;
+}
+
+.navbar {
+    display: flex;
+    padding: 0;
+    font-size: 1.3rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: white;
+    padding:  0 0 0 2rem;
+}
+
+.login {
+    font-size: 1.2rem;
+}
+
+.navbar nav a,
+.navbar .login a {
+    margin: 0 25px;
+    color: white;
+    text-decoration: none;
+}
+
+nav {
+    margin-right: 20%;
+}
+nav a {
+    margin: 0 10px; 
+}
+
+/* estructura */
+.estructura {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    padding: 8.5rem 2rem;
+    background-image: url("https://pymstatic.com/98446/psicologos-iquitos.jpg");
+        background-size: cover; 
+        background-position: center;
+        background-repeat: no-repeat; 
+}
+
+.cuerpo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 4rem;
+    padding: 1rem;
+}
+
+.cuerpo p {
+    font-size: 1.2rem;
+    color: black;
+}
+
+.cuerpo p a {
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+.cuerpo p a:hover {
+    color: red;
+}
+
+.cuerpo-1 {
+    background-color: #fff;
+    color: #002b5c;
+    text-align: center;
+    border-radius: 10px;
+    padding: 3.5rem 1rem;
+    font-size: 1.5rem;
+    box-sizing: border-box;
+}
+
+.cuerpo-1 .fa-solid {
+    padding: 1rem 0.5rem;
+}
+
+.cuerpo-1 h2 {
+    font-weight: bold;
+}
+
+div p {
+    font-size: 1rem;
+}
+
+.fa-solid {
+    font-size: 4.5rem;
+}
+
+.estructura-2 {
+    display: flex;
+    background-color: black;
+    color: #fff;
+}
+
+.formulario {
+    width: 50%;
+    padding: 5rem 5rem;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 5px;
+    border: 1px solid#ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+input[type="email"] {
+    width: 100%;
+}
+
+form button {
+    margin: 20px auto; 
+    display: block; 
+    width: 90%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #002b5c;
+    transition: 0.8s;
+}
+
+form button:hover {
+    background-color: rgb(8, 86, 138);
+}
+
+label {
+    display: block;
+    margin: 2rem;
+}
+
+.info {
+    width: 50%;
+    padding: 5rem 5rem;
+}
+
+.info h3 {
+    font-size: 2.1rem;
+    padding: 0 0 2rem 0;
+}
+
+.info h4 {
+    font-size: 1.5rem;
+    padding: 0 0 2rem 0;
+}
+
+.iconos {
+    display: flex;
+    gap: 20px;
+    margin: 3rem 0;
+}
+
+.iconos a {
+    text-decoration: none;
+    color: #333;
+    font-size: 2.5em;
+    transition: 0.5s;
+}
+
+.iconos a:hover {
+    color: #002b5c;
+}
+
+.iconos i {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f4f4f4;
+    line-height: 60px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* footer */
+
+.footer {
+    background-color: #002b5c;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+}
+.footer .social-icons a {
+    margin: 0 10px;
+    color: #ffffff;
+    font-size: 24px;
+    text-decoration: none;
+}
+.footer .links {
+    margin-top: 15px;
+}
+.footer .links a {
+    color: #ffffff;
+    margin: 0 15px;
+    text-decoration: none;
+    font-size: 14px;
+}
+.footer .links a:hover {
+    text-decoration: underline;
+}
+.footer .bottom-section {
+    margin-top: 20px;
+    border-top: 1px solid #ffffff;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer .bottom-section img {
+    height: 40px;
+    margin: 10px;
+}
+.footer .bottom-section .company-name {
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+.affiliates {
+    padding-top: 10px;
+}
