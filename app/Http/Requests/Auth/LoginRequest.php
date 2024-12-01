@@ -49,6 +49,14 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Verificar si el usuario intenta iniciar sesión como administrador
+        if ($this->boolean('is_admin') && !Auth::user()->is_admin) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'No tienes permisos de administrador.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 

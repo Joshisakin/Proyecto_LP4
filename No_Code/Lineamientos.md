@@ -13,27 +13,11 @@ Una aplicación que permite a los usuarios buscar y reservar tickets para viajes
 * Reserva y pago de tickets (integración con un servicio de pago)
 * Gestión de reservas y cancelaciones
 
-## Formato de Documentación de trabajo (no de usuario o tecnica)
-
-### Portada
-
-* Título del proyecto
-* Nombre de los autores
-* Fecha de entrega
-
-### Índice
-
-### Introducción
-
-* Descripción general del proyecto
-* Objetivos del proyecto
-* Justificación de la elección del tema
-
 ## Tecnologías Utilizadas
 
 * Breve descripción de Laravel y MySQL
 * Herramientas y librerías adicionales (por ejemplo, Bootstrap, Tailwind, Breeze,
-etc...)
+  etc...)
 
 ## Requerimientos del Sistema
 
@@ -45,27 +29,8 @@ etc...)
 * Diagrama de arquitectura (MVC)
 * Diagramas ER (Descripción de la estructura de la base de datos)
 
-## Funcionalidades del Proyecto
+## Lógica de Negocio
 
-* Descripción detallada de cada funcionalidad implementada
-* Manual de Usuario (con capturas de pantalla)
+* Corrimiento:
 
-## Proceso de Desarrollo
-
-* Metodología utilizada (ágil, tradicional, etc...)
-* Descripción de las fases del desarrollo (planteamiento, diseño, implementación,
-pruebas, según metodología)
-
-## Conclusiones
-
-* Reflexiones sobre el proyecto
-* Lecciones aprendidas
-* Posibles mejoras futuras
-
-## Referencias
-
-* Fuentes bibliográficas y enlaces a recursos utilizados
-
-## Anexos
-
-* Cualquier material adicional relevante (código fuente, documentación técnica, etc.)
+  * Ingreso Inicial->Pagina de Bienvenida

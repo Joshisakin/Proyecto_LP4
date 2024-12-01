@@ -3,7 +3,7 @@
 ## Portada
 
 **Título**: Sistema de Reserva de Tickets de Transporte Fluvial
-  
+
 **Fecha**: 5/11/2024
 
 ## Índice
@@ -111,20 +111,24 @@ Desarrollo iterativo e incremental
 ### Fases
 
 1. **Planificación**:
+   
    - Definición de requerimientos
    - Diseño de arquitectura
 
 2. **Desarrollo**:
+   
    - Implementación de autenticación
    - Desarrollo de funcionalidades core
    - Integración de sistema de pagos
 
 3. **Pruebas**:
+   
    - Testing unitario
    - Testing de integración
    - Testing de interfaz
 
 4. **Despliegue**:
+   
    - Configuración de entorno
    - Despliegue inicial
    - Monitoreo
