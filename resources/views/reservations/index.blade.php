@@ -1,106 +1,98 @@
-<x-app-layout>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h2 class="text-2xl font-bold mb-6">Mis Reservas</h2>
+@extends('layouts.app')
 
-                    @if($reservations->isEmpty())
-                        <div class="text-center py-8">
-                            <i class="fas fa-ticket-alt text-gray-400 text-5xl mb-4"></i>
-                            <p class="text-gray-600">No tienes reservas activas.</p>
-                            <a href="{{ route('routes.index') }}" 
-                               class="inline-block mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-                                <i class="fas fa-search mr-2"></i>Buscar Rutas Disponibles
-                            </a>
-                        </div>
-                    @else
-                        <div class="space-y-6">
-                            @foreach($reservations as $reservation)
-                                <div class="border rounded-lg overflow-hidden">
-                                    <!-- Encabezado -->
-                                    <div class="bg-gray-50 p-4 flex items-center justify-between">
-                                        <div class="flex items-center space-x-4">
-                                            <div @class([
-                                                'px-3 py-1 rounded-full text-sm font-semibold',
-                                                'bg-green-100 text-green-800' => $reservation->status === 'confirmed',
-                                                'bg-red-100 text-red-800' => $reservation->status === 'cancelled',
-                                            ])>
-                                                {{ ucfirst($reservation->status) }}
-                                            </div>
-                                            <span class="text-gray-500">
-                                                Reserva #{{ $reservation->id }}
-                                            </span>
-                                        </div>
-                                        <div class="text-right">
-                                            <p class="text-sm text-gray-500">Reservado el</p>
-                                            <p class="font-semibold">
-                                                {{ \Carbon\Carbon::parse($reservation->created_at)->format('d/m/Y') }}
-                                            </p>
-                                        </div>
-                                    </div>
+@section('title', 'Mis Reservas')
 
-                                    <!-- Contenido -->
-                                    <div class="p-4">
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <!-- Detalles del Viaje -->
-                                            <div>
-                                                <h3 class="font-semibold text-lg mb-2">Detalles del Viaje</h3>
-                                                <div class="space-y-2">
-                                                    <p>
-                                                        <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
-                                                        <span class="font-medium">{{ $reservation->route->origin }}</span>
-                                                        <i class="fas fa-arrow-right text-gray-400 mx-2"></i>
-                                                        <span class="font-medium">{{ $reservation->route->destination }}</span>
-                                                    </p>
-                                                    <p>
-                                                        <i class="fas fa-calendar text-blue-500 mr-2"></i>
-                                                        {{ \Carbon\Carbon::parse($reservation->travel_date)->isoFormat('dddd D [de] MMMM, YYYY') }}
-                                                    </p>
-                                                    <p>
-                                                        <i class="fas fa-clock text-blue-500 mr-2"></i>
-                                                        Salida: {{ \Carbon\Carbon::parse($reservation->schedule->departure_time)->format('h:i A') }}
-                                                    </p>
-                                                </div>
-                                            </div>
+@section('content')
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Mis Reservas</h1>
+        <a href="{{ route('rutas.index') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Nueva Reserva
+        </a>
+    </div>
 
-                                            <!-- Detalles de la Reserva -->
-                                            <div>
-                                                <h3 class="font-semibold text-lg mb-2">Detalles de la Reserva</h3>
-                                                <div class="space-y-2">
-                                                    <p>
-                                                        <i class="fas fa-users text-green-500 mr-2"></i>
-                                                        {{ $reservation->passenger_count }} pasajero(s)
-                                                    </p>
-                                                    <p>
-                                                        <i class="fas fa-tag text-green-500 mr-2"></i>
-                                                        Total: S/{{ number_format($reservation->total_price, 2) }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-                                        <!-- Acciones -->
-                                        @if($reservation->status === 'confirmed' && \Carbon\Carbon::parse($reservation->travel_date)->isFuture())
-                                            <div class="mt-4 flex justify-end">
-                                                <form action="{{ route('reservations.destroy', $reservation) }}" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" 
-                                                            class="text-red-600 hover:text-red-800"
-                                                            onclick="return confirm('¿Estás seguro de que deseas cancelar esta reserva?')">
-                                                        <i class="fas fa-times-circle mr-2"></i>Cancelar Reserva
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
+    @if($reservations->isEmpty())
+        <div class="card shadow-sm">
+            <div class="card-body text-center py-5">
+                <img src="/images/empty-reservations.svg" alt="No hay reservas" class="mb-3" style="max-width: 200px">
+                <h3 class="h5 text-muted">No tienes reservas activas</h3>
+                <p class="text-muted mb-3">¡Comienza reservando tu primer viaje!</p>
+                <a href="{{ route('rutas.index') }}" class="btn btn-primary">
+                    <i class="fas fa-search me-2"></i>Explorar Rutas
+                </a>
             </div>
         </div>
-    </div>
-</x-app-layout>
+    @else
+        <div class="row">
+            @foreach($reservations as $reservation)
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="card-title mb-0">
+                                    {{ $reservation->route->origen }} - {{ $reservation->route->destino }}
+                                </h5>
+                                <span class="badge bg-{{ $reservation->status_color }}">
+                                    {{ $reservation->status_text }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Fecha de Salida</small>
+                                <strong>{{ $reservation->route->fecha_salida->format('d/m/Y g:i A') }}</strong>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Pasajeros</small>
+                                <strong>{{ $reservation->num_pasajeros }}</strong>
+                            </div>
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Total</small>
+                                <strong>S/ {{ number_format($reservation->total, 2) }}</strong>
+                            </div>
+                            @if($reservation->notas)
+                                <div class="mb-3">
+                                    <small class="text-muted d-block">Notas</small>
+                                    <p class="mb-0">{{ $reservation->notas }}</p>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">
+                                    Reservado el {{ $reservation->created_at->format('d/m/Y') }}
+                                </small>
+                                <div>
+                                    <a href="{{ route('reservations.show', $reservation) }}"
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye me-1"></i>Ver Detalles
+                                    </a>
+                                    @if($reservation->estado === 'pendiente')
+                                        <form action="{{ route('reservations.destroy', $reservation) }}"
+                                              method="POST"
+                                              class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('¿Está seguro de cancelar esta reserva?')">
+                                                <i class="fas fa-times me-1"></i>Cancelar
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @endif
+</div>
+@endsection

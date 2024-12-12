@@ -4,49 +4,52 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'user_id',
         'route_id',
-        'schedule_id',
-        'travel_date',
-        'passenger_count',
-        'total_price',
-        'status',
+        'estado',
+        'num_pasajeros',
+        'total',
+        'notas',
     ];
 
     protected $casts = [
-        'travel_date' => 'date',
-        'total_price' => 'decimal:2',
-        'passenger_count' => 'integer',
+        'total' => 'decimal:2',
+        'num_pasajeros' => 'integer',
     ];
 
-    /**
-     * Get the user that owns the reservation.
-     */
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the route for the reservation.
-     */
-    public function route(): BelongsTo
+    public function route()
     {
         return $this->belongsTo(Route::class);
     }
 
-    /**
-     * Get the schedule for the reservation.
-     */
-    public function schedule(): BelongsTo
+    public function payment()
     {
-        return $this->belongsTo(Schedule::class);
+        return $this->hasOne(Payment::class);
+    }
+
+    public function getStatusColorAttribute()
+    {
+        return [
+            'pendiente' => 'warning',
+            'confirmada' => 'success',
+            'cancelada' => 'danger',
+        ][$this->estado] ?? 'secondary';
+    }
+
+    public function getStatusTextAttribute()
+    {
+        return ucfirst($this->estado);
     }
 }

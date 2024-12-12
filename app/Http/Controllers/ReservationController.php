@@ -3,88 +3,89 @@
 namespace App\Http\Controllers;
 
 use App\Models\Route;
-use App\Models\Schedule;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ReservationController extends Controller
 {
+    use AuthorizesRequests;
+
     public function index()
     {
-        $reservations = Auth::user()->reservations()
-            ->with(['route', 'schedule'])
-            ->orderBy('travel_date', 'desc')
+        $reservations = Reservation::with(['route'])
+            ->where('user_id', auth()->id())
+            ->latest()
             ->get();
 
         return view('reservations.index', compact('reservations'));
     }
 
-    public function create(Route $route)
+    public function create(Request $request)
     {
-        $schedules = $route->schedules;
-        return view('reservations.create', compact('route', 'schedules'));
+        $ruta = Route::findOrFail($request->ruta_id);
+        return view('reservations.create', compact('ruta'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'route_id' => 'required|exists:routes,id',
-            'schedule_id' => 'required|exists:schedules,id',
-            'travel_date' => [
-                'required',
-                'date',
-                'after_or_equal:today',
-            ],
-            'passenger_count' => 'required|integer|min:1|max:10',
-        ], [
-            'travel_date.after_or_equal' => 'La fecha de viaje debe ser hoy o una fecha futura.',
-            'passenger_count.max' => 'No se pueden reservar más de 10 asientos por reserva.',
-            'passenger_count.min' => 'Debe reservar al menos 1 asiento.',
+            'ruta_id' => 'required|exists:rutas,id',
+            'cantidad_pasajeros' => 'required|integer|min:1|max:10',
+            'comentarios' => 'nullable|string|max:500',
         ]);
 
-        // Verificar que el horario pertenece a la ruta
-        $schedule = Schedule::findOrFail($request->schedule_id);
-        if ($schedule->route_id != $request->route_id) {
-            return back()->withErrors(['schedule_id' => 'El horario seleccionado no corresponde a esta ruta.']);
+        $ruta = Route::findOrFail($request->ruta_id);
+
+        // Verificar disponibilidad
+        if ($ruta->capacidad < $request->cantidad_pasajeros) {
+            return back()->withErrors(['cantidad_pasajeros' => 'No hay suficientes asientos disponibles.']);
         }
 
-        // Crear la reserva
-        $reservation = Reservation::create([
-            'user_id' => Auth::id(),
-            'route_id' => $request->route_id,
-            'schedule_id' => $request->schedule_id,
-            'travel_date' => $request->travel_date,
-            'passenger_count' => $request->passenger_count,
-            'status' => 'confirmed',
-            'total_price' => Route::find($request->route_id)->price * $request->passenger_count,
-        ]);
+        // Crear la reservación
+        $reservation = new Reservation();
+        $reservation->user_id = auth()->id();
+        $reservation->route_id = $ruta->id;
+        $reservation->estado = 'pendiente';
+        $reservation->num_pasajeros = $request->cantidad_pasajeros;
+        $reservation->total = $ruta->precio * $request->cantidad_pasajeros;
+        $reservation->notas = $request->comentarios;
+        $reservation->save();
+
+        // Actualizar capacidad de la ruta
+        $ruta->capacidad -= $request->cantidad_pasajeros;
+        $ruta->save();
 
         return redirect()->route('reservations.show', $reservation)
-            ->with('success', '¡Reserva creada exitosamente! Te esperamos el ' . 
-                Carbon::parse($reservation->travel_date)->isoFormat('dddd D [de] MMMM') . 
-                ' para tu viaje.');
+            ->with('success', '¡Reserva creada exitosamente! Por favor, complete el pago para confirmarla.');
     }
 
     public function show(Reservation $reservation)
     {
-        $this->authorize('view', $reservation);
+        // Verificar si el usuario actual es el dueño de la reserva
+        if ($reservation->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para ver esta reserva.');
+        }
+
         return view('reservations.show', compact('reservation'));
     }
 
     public function destroy(Reservation $reservation)
     {
+        // Verificar que el usuario actual es el dueño de la reserva
         $this->authorize('delete', $reservation);
-        
-        // Solo permitir cancelar reservas futuras
-        if (Carbon::parse($reservation->travel_date)->isPast()) {
-            return back()->withErrors(['error' => 'No se pueden cancelar reservas de fechas pasadas.']);
+
+        try {
+            // Restaurar los asientos disponibles en la ruta
+            $reservation->route->increment('capacidad', $reservation->num_pasajeros);
+
+            // Eliminar la reserva
+            $reservation->delete();
+
+            return redirect()->route('reservations.index')
+                ->with('success', 'Reserva eliminada exitosamente');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error al eliminar la reserva: ' . $e->getMessage()]);
         }
-
-        $reservation->update(['status' => 'cancelled']);
-
-        return redirect()->route('reservations.index')
-            ->with('success', 'Reserva cancelada exitosamente.');
     }
 }

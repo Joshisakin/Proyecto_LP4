@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('route_id')->constrained()->onDelete('cascade');
-            $table->foreignId('schedule_id')->constrained()->onDelete('cascade');
-            $table->date('travel_date');
-            $table->integer('passenger_count');
-            $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['confirmed', 'cancelled'])->default('confirmed');
+            $table->foreignId('route_id')->constrained('rutas')->onDelete('cascade');
+            $table->enum('estado', ['pendiente', 'confirmada', 'cancelada'])->default('pendiente');
+            $table->integer('num_pasajeros');
+            $table->decimal('total', 10, 2);
+            $table->text('notas')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
