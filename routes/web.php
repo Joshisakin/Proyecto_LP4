@@ -72,6 +72,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reservations/create', [ReservationController::class, 'create'])->name('reservations.create');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::get('/reservations/{reservation}', [ReservationController::class, 'show'])->name('reservations.show');
+    Route::get('/reservations/{reservation}/ticket', [ReservationController::class, 'downloadTicket'])
+        ->name('reservations.ticket');
 
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

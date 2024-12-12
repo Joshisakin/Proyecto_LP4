@@ -6,6 +6,8 @@ use App\Models\Route;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReservationController extends Controller
 {
@@ -87,5 +89,17 @@ class ReservationController extends Controller
         } catch (\Exception $e) {
             return back()->withErrors(['error' => 'Error al eliminar la reserva: ' . $e->getMessage()]);
         }
+    }
+
+    public function downloadTicket(Reservation $reservation)
+    {
+        // Verificar que el usuario actual es el dueño de la reserva
+        $this->authorize('view', $reservation);
+
+        // Generar el PDF
+        $pdf = PDF::loadView('pdf.ticket', compact('reservation'));
+
+        // Descargar el PDF
+        return $pdf->download('ticket-' . $reservation->id . '.pdf');
     }
 }

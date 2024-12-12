@@ -1,0 +1,84 @@
+MIDDLEWARES DEL PROYECTO AMAZONRIVER
+
+1. MIDDLEWARE GLOBAL
+Estos middleware se ejecutan durante cada solicitud a la aplicación:
+
+- TrustProxies: Configura la confianza en los proxies para el balanceo de carga
+- HandleCors: Maneja las solicitudes de origen cruzado (CORS)
+- PreventRequestsDuringMaintenance: Previene solicitudes durante el modo de mantenimiento
+- ValidatePostSize: Valida el tamaño de las solicitudes POST
+- TrimStrings: Elimina espacios en blanco al inicio y final de las cadenas
+- ConvertEmptyStringsToNull: Convierte cadenas vacías a null
+
+2. MIDDLEWARE DE GRUPO WEB
+Se aplican a todas las rutas web:
+
+- EncryptCookies: Encripta las cookies
+- AddQueuedCookiesToResponse: Añade cookies en cola a la respuesta
+- StartSession: Inicia la sesión
+- ShareErrorsFromSession: Comparte errores desde la sesión
+- VerifyCsrfToken: Verifica el token CSRF
+- SubstituteBindings: Sustituye los enlaces de ruta
+
+3. MIDDLEWARE DE GRUPO API
+Se aplican a las rutas de API:
+
+- ThrottleRequests: Limita la tasa de solicitudes
+- SubstituteBindings: Sustituye los enlaces de ruta
+
+4. MIDDLEWARE CON ALIAS
+Pueden ser asignados a rutas específicas:
+
+- auth: Verifica que el usuario esté autenticado
+- auth.basic: Autenticación HTTP básica
+- auth.session: Autenticación basada en sesión
+- cache.headers: Configura las cabeceras de caché
+- can: Verifica permisos específicos
+- guest: Redirige usuarios autenticados
+- password.confirm: Requiere confirmación de contraseña
+- signed: Valida firmas de URL
+- throttle: Limita tasa de solicitudes
+- verified: Asegura que el email esté verificado
+- admin: Verifica que el usuario sea administrador
+
+5. MIDDLEWARE PERSONALIZADOS
+
+AdminMiddleware:
+- Ruta: app/Http/Middleware/AdminMiddleware.php
+- Función: Verifica que el usuario tenga rol de administrador
+- Uso: Protege rutas administrativas
+
+AuthenticationMiddleware:
+- Ruta: app/Http/Middleware/AuthenticationMiddleware.php
+- Función: Maneja la autenticación y registra intentos de acceso
+- Uso: Registra información de autenticación y redirige usuarios no autenticados
+
+CÓMO USAR LOS MIDDLEWARE
+
+1. En rutas individuales:
+```php
+Route::get('/ruta', [Controller::class, 'método'])->middleware('auth');
+```
+
+2. En grupos de rutas:
+```php
+Route::middleware(['auth'])->group(function () {
+    // Rutas protegidas
+});
+```
+
+3. En controladores:
+```php
+public function __construct()
+{
+    $this->middleware('auth');
+}
+```
+
+NOTAS IMPORTANTES:
+
+- Los middleware se ejecutan en el orden especificado
+- Algunos middleware como 'auth' y 'admin' son fundamentales para la seguridad
+- El middleware CSRF protege contra ataques de falsificación de solicitudes
+- Los middleware de API ayudan a controlar el tráfico y proteger los endpoints
+- Los middleware personalizados extienden la funcionalidad según necesidades específicas
